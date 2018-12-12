@@ -9,3 +9,4 @@ if __name__ == "__main__":
 
     recognizer = recognizer.Recognizer()
     recognizer.recognize(PATH, IMG_SIZE)
+    # recognizer.recognize2(PATH, IMG_SIZE)
