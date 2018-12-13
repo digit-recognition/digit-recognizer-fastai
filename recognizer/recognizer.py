@@ -13,8 +13,12 @@ from resizeimage import resizeimage
 
 
 class Recognizer:
-    def recognize(self, PATH, IMG_SIZE):
-        img = Image.open(PATH / "data/gray2.png")
+    def __set__(self, instance, value):
+        self.img_size = 28
+        self.work_path = Path('.')
+
+    def recognize(self, file_path):
+        img = Image.open(file_path)
         img = resizeimage.resize('thumbnail', img, [28, 28])
 
         arr = np.array(img)
@@ -29,19 +33,19 @@ class Recognizer:
 
         arch = resnet34
         stats = (np.array([0.4914, 0.48216, 0.44653]), np.array([0.24703, 0.24349, 0.26159]))
-        tfms = tfms_from_stats(stats, IMG_SIZE, aug_tfms=[RandomFlip()], pad=IMG_SIZE // 8)
+        tfms = tfms_from_stats(stats, self.img_size, aug_tfms=[RandomFlip()], pad=file_path // 8)
 
         x_template = np.zeros((1, 28, 28, 3))
         y_template = np.zeros((1))
 
-        data = ImageClassifierData.from_arrays(PATH, trn=(x_template, y_template), val=(x_template, y_template),
+        data = ImageClassifierData.from_arrays(self.work_path, trn=(x_template, y_template), val=(x_template, y_template),
                                                test=to_recognize,
                                                tfms=tfms)
 
         data.trn_ds.c = 10  # num of classes
 
         learn = ConvLearner.pretrained(arch, data, precompute=False)
-        learn.load(PATH / '28_all')
+        learn.load(self.work_path / '28_all')
         print('loaded')
 
         log_preds, y = learn.TTA(is_test=True)  # use test dataset rather than validation dataset

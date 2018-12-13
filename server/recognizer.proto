@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+message  DigitRecognitionResponse {
+    int32 value = 1;
+}
+
+message DigitRecognitionRequest {
+    string value = 1;
+}
+
+service DigitRecognition {
+    rpc Recognize(DigitRecognitionRequest) returns (DigitRecognitionResponse) {}
+}
