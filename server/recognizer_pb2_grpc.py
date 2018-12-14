@@ -14,9 +14,14 @@ class DigitRecognitionStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.Recognize = channel.unary_unary(
-        '/com.kugmax.learn.digitgateway.digitgateway.services.DigitRecognition/Recognize',
-        request_serializer=recognizer__pb2.DigitRecognitionRequest.SerializeToString,
+    self.RecognizeByPath = channel.unary_unary(
+        '/com.kugmax.learn.digitgateway.digitgateway.services.DigitRecognition/RecognizeByPath',
+        request_serializer=recognizer__pb2.DigitRecognitionByPathRequest.SerializeToString,
+        response_deserializer=recognizer__pb2.DigitRecognitionResponse.FromString,
+        )
+    self.RecognizeByBytes = channel.unary_unary(
+        '/com.kugmax.learn.digitgateway.digitgateway.services.DigitRecognition/RecognizeByBytes',
+        request_serializer=recognizer__pb2.DigitRecognitionByBytesRequest.SerializeToString,
         response_deserializer=recognizer__pb2.DigitRecognitionResponse.FromString,
         )
 
@@ -25,7 +30,14 @@ class DigitRecognitionServicer(object):
   # missing associated documentation comment in .proto file
   pass
 
-  def Recognize(self, request, context):
+  def RecognizeByPath(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def RecognizeByBytes(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -35,9 +47,14 @@ class DigitRecognitionServicer(object):
 
 def add_DigitRecognitionServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'Recognize': grpc.unary_unary_rpc_method_handler(
-          servicer.Recognize,
-          request_deserializer=recognizer__pb2.DigitRecognitionRequest.FromString,
+      'RecognizeByPath': grpc.unary_unary_rpc_method_handler(
+          servicer.RecognizeByPath,
+          request_deserializer=recognizer__pb2.DigitRecognitionByPathRequest.FromString,
+          response_serializer=recognizer__pb2.DigitRecognitionResponse.SerializeToString,
+      ),
+      'RecognizeByBytes': grpc.unary_unary_rpc_method_handler(
+          servicer.RecognizeByBytes,
+          request_deserializer=recognizer__pb2.DigitRecognitionByBytesRequest.FromString,
           response_serializer=recognizer__pb2.DigitRecognitionResponse.SerializeToString,
       ),
   }

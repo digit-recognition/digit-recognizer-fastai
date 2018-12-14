@@ -1,4 +1,6 @@
 import sys
+from io import BytesIO
+
 sys.path.append('../')
 
 from fastai.imports import *
@@ -10,6 +12,7 @@ from fastai.sgdr import *
 from fastai.plots import *
 import traceback
 from resizeimage import resizeimage
+import base64
 
 
 class Recognizer:
@@ -18,13 +21,29 @@ class Recognizer:
         self.img_size = 28
         self.work_path = Path('.')
 
-    def recognize(self, file_path):
+    def recognize_by_str(self, str_img):
+        print(str_img)
+
+        imgdata = base64.b64decode(str_img)
+
+        img = Image.open(BytesIO(imgdata))
+
+        print()
+        print(img)
+
+        return self.__recognize(img)
+
+    def recognize_by_path(self, file_path):
         print(file_path)
 
         img = Image.open(file_path)
-        img = resizeimage.resize('thumbnail', img, [28, 28])
+        return self.__recognize(img)
 
+    def __recognize(self, img):
+        img = resizeimage.resize('thumbnail', img, [28, 28])
         arr = np.array(img)
+        print(arr)
+
         arr = arr.reshape(1, 784)
         print(arr.shape)
 

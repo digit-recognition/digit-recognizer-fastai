@@ -7,10 +7,15 @@ message  DigitRecognitionResponse {
     int32 value = 1;
 }
 
-message DigitRecognitionRequest {
-    string value = 1;
+message DigitRecognitionByPathRequest {
+    string path = 1;
+}
+
+message DigitRecognitionByBytesRequest {
+    string bytes = 1;
 }
 
 service DigitRecognition {
-    rpc Recognize(DigitRecognitionRequest) returns (DigitRecognitionResponse) {}
+    rpc RecognizeByPath(DigitRecognitionByPathRequest) returns (DigitRecognitionResponse) {}
+    rpc RecognizeByBytes(DigitRecognitionByBytesRequest) returns (DigitRecognitionResponse) {}
 }
