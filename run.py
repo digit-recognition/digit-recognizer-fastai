@@ -17,12 +17,3 @@ if __name__ == "__main__":
             time.sleep(86400)
     except KeyboardInterrupt:
         server.stop(0)
-
-
-# if __name__ == "__main__":
-#     PATH = Path('.')
-#     IMG_SIZE = 28
-#
-#     recognizer = recognizer.Recognizer()
-#     recognizer.recognize(PATH, IMG_SIZE)
-#

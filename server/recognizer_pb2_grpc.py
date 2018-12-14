@@ -15,7 +15,7 @@ class DigitRecognitionStub(object):
       channel: A grpc.Channel.
     """
     self.Recognize = channel.unary_unary(
-        '/DigitRecognition/Recognize',
+        '/com.kugmax.learn.digitgateway.digitgateway.services.DigitRecognition/Recognize',
         request_serializer=recognizer__pb2.DigitRecognitionRequest.SerializeToString,
         response_deserializer=recognizer__pb2.DigitRecognitionResponse.FromString,
         )
@@ -42,5 +42,5 @@ def add_DigitRecognitionServicer_to_server(servicer, server):
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'DigitRecognition', rpc_method_handlers)
+      'com.kugmax.learn.digitgateway.digitgateway.services.DigitRecognition', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))

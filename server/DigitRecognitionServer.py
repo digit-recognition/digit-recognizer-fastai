@@ -9,5 +9,9 @@ class DigitRecognitionServer(recognizer_pb2_grpc.DigitRecognitionServicer):
 
         service = recognizer.Recognizer()
 
-        response.value = service.recognize(request.value)
+        try:
+            response.value = service.recognize(request.value)
+        except Exception as e:
+            print(e)
+
         return response

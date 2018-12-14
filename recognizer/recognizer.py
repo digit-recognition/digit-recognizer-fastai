@@ -13,11 +13,14 @@ from resizeimage import resizeimage
 
 
 class Recognizer:
-    def __set__(self, instance, value):
+
+    def __init__(self):
         self.img_size = 28
         self.work_path = Path('.')
 
     def recognize(self, file_path):
+        print(file_path)
+
         img = Image.open(file_path)
         img = resizeimage.resize('thumbnail', img, [28, 28])
 
@@ -33,7 +36,7 @@ class Recognizer:
 
         arch = resnet34
         stats = (np.array([0.4914, 0.48216, 0.44653]), np.array([0.24703, 0.24349, 0.26159]))
-        tfms = tfms_from_stats(stats, self.img_size, aug_tfms=[RandomFlip()], pad=file_path // 8)
+        tfms = tfms_from_stats(stats, self.img_size, aug_tfms=[RandomFlip()], pad=self.img_size // 8)
 
         x_template = np.zeros((1, 28, 28, 3))
         y_template = np.zeros((1))
@@ -53,54 +56,6 @@ class Recognizer:
         probs = np.mean(np.exp(log_preds), 0)
         actual = probs[0].argmax()
 
-        print('correct =', 7, ' actual =', actual)
+        print('recognition result =', actual)
 
-    def _recognize(self, PATH, IMG_SIZE):
-        all_train = pd.read_csv(filepath_or_buffer=PATH / 'data/train.csv')
-        print(all_train.shape)
-
-        val_ids = get_cv_idxs(all_train['label'].size)
-        all_train.drop(all_train.index[val_ids])
-        valid = all_train.iloc[val_ids]
-        print(valid.shape)
-
-        n_channels = 3
-
-        valid_y = np.array(valid['label'])
-
-        tmp_x = np.array(valid.iloc[:, 1:])
-        print(tmp_x.shape)
-
-        valid_x = np.repeat(tmp_x, n_channels, axis=1)
-        valid_x = valid_x.astype(np.float32)
-
-        print(valid_x.shape)
-
-        valid_x = valid_x.reshape(valid_x.shape[0], IMG_SIZE, IMG_SIZE, n_channels)
-        print(valid_x.shape)
-
-        arch = resnet34
-        stats = (np.array([0.4914, 0.48216, 0.44653]), np.array([0.24703, 0.24349, 0.26159]))
-        tfms = tfms_from_stats(stats, IMG_SIZE, aug_tfms=[RandomFlip()], pad=IMG_SIZE // 8)
-
-        x_template = np.zeros((1, 28, 28, 3))
-        y_template = np.zeros((1))
-        to_recognize = valid_x[0].reshape(1, IMG_SIZE, IMG_SIZE, 3)
-
-        data = ImageClassifierData.from_arrays(PATH, trn=(x_template, y_template), val=(x_template, y_template),
-                                               test=to_recognize,
-                                               tfms=tfms)
-        data.trn_ds.c = 10  # num of classes
-
-        learn = ConvLearner.pretrained(arch, data, precompute=False)
-        learn.load(PATH / '28_all')
-        print('loaded')
-
-        log_preds, y = learn.TTA(is_test=True)  # use test dataset rather than validation dataset
-
-        probs = np.mean(np.exp(log_preds), 0)
-        actual = probs[0].argmax()
-
-        print('correct =', valid_y[0], ' actual =', actual)
-
-
+        return actual

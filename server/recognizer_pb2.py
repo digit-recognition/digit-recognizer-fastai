@@ -16,10 +16,10 @@ _sym_db = _symbol_database.Default()
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='recognizer.proto',
-  package='',
+  package='com.kugmax.learn.digitgateway.digitgateway.services',
   syntax='proto3',
-  serialized_options=None,
-  serialized_pb=_b('\n\x10recognizer.proto\")\n\x18\x44igitRecognitionResponse\x12\r\n\x05value\x18\x01 \x01(\x05\"(\n\x17\x44igitRecognitionRequest\x12\r\n\x05value\x18\x01 \x01(\t2V\n\x10\x44igitRecognition\x12\x42\n\tRecognize\x12\x18.DigitRecognitionRequest\x1a\x19.DigitRecognitionResponse\"\x00\x62\x06proto3')
+  serialized_options=_b('P\001'),
+  serialized_pb=_b('\n\x10recognizer.proto\x12\x33\x63om.kugmax.learn.digitgateway.digitgateway.services\")\n\x18\x44igitRecognitionResponse\x12\r\n\x05value\x18\x01 \x01(\x05\"(\n\x17\x44igitRecognitionRequest\x12\r\n\x05value\x18\x01 \x01(\t2\xbf\x01\n\x10\x44igitRecognition\x12\xaa\x01\n\tRecognize\x12L.com.kugmax.learn.digitgateway.digitgateway.services.DigitRecognitionRequest\x1aM.com.kugmax.learn.digitgateway.digitgateway.services.DigitRecognitionResponse\"\x00\x42\x02P\x01\x62\x06proto3')
 )
 
 
@@ -27,13 +27,13 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _DIGITRECOGNITIONRESPONSE = _descriptor.Descriptor(
   name='DigitRecognitionResponse',
-  full_name='DigitRecognitionResponse',
+  full_name='com.kugmax.learn.digitgateway.digitgateway.services.DigitRecognitionResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='value', full_name='DigitRecognitionResponse.value', index=0,
+      name='value', full_name='com.kugmax.learn.digitgateway.digitgateway.services.DigitRecognitionResponse.value', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -51,20 +51,20 @@ _DIGITRECOGNITIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20,
-  serialized_end=61,
+  serialized_start=73,
+  serialized_end=114,
 )
 
 
 _DIGITRECOGNITIONREQUEST = _descriptor.Descriptor(
   name='DigitRecognitionRequest',
-  full_name='DigitRecognitionRequest',
+  full_name='com.kugmax.learn.digitgateway.digitgateway.services.DigitRecognitionRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='value', full_name='DigitRecognitionRequest.value', index=0,
+      name='value', full_name='com.kugmax.learn.digitgateway.digitgateway.services.DigitRecognitionRequest.value', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -82,8 +82,8 @@ _DIGITRECOGNITIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=63,
-  serialized_end=103,
+  serialized_start=116,
+  serialized_end=156,
 )
 
 DESCRIPTOR.message_types_by_name['DigitRecognitionResponse'] = _DIGITRECOGNITIONRESPONSE
@@ -93,31 +93,32 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 DigitRecognitionResponse = _reflection.GeneratedProtocolMessageType('DigitRecognitionResponse', (_message.Message,), dict(
   DESCRIPTOR = _DIGITRECOGNITIONRESPONSE,
   __module__ = 'recognizer_pb2'
-  # @@protoc_insertion_point(class_scope:DigitRecognitionResponse)
+  # @@protoc_insertion_point(class_scope:com.kugmax.learn.digitgateway.digitgateway.services.DigitRecognitionResponse)
   ))
 _sym_db.RegisterMessage(DigitRecognitionResponse)
 
 DigitRecognitionRequest = _reflection.GeneratedProtocolMessageType('DigitRecognitionRequest', (_message.Message,), dict(
   DESCRIPTOR = _DIGITRECOGNITIONREQUEST,
   __module__ = 'recognizer_pb2'
-  # @@protoc_insertion_point(class_scope:DigitRecognitionRequest)
+  # @@protoc_insertion_point(class_scope:com.kugmax.learn.digitgateway.digitgateway.services.DigitRecognitionRequest)
   ))
 _sym_db.RegisterMessage(DigitRecognitionRequest)
 
 
+DESCRIPTOR._options = None
 
 _DIGITRECOGNITION = _descriptor.ServiceDescriptor(
   name='DigitRecognition',
-  full_name='DigitRecognition',
+  full_name='com.kugmax.learn.digitgateway.digitgateway.services.DigitRecognition',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=105,
-  serialized_end=191,
+  serialized_start=159,
+  serialized_end=350,
   methods=[
   _descriptor.MethodDescriptor(
     name='Recognize',
-    full_name='DigitRecognition.Recognize',
+    full_name='com.kugmax.learn.digitgateway.digitgateway.services.DigitRecognition.Recognize',
     index=0,
     containing_service=None,
     input_type=_DIGITRECOGNITIONREQUEST,
