@@ -43,7 +43,6 @@ dependencies:
 - libsodium
 - libxml2
 - markupsafe
-- matplotlib<=2.2.3
 - mistune
 - mkl
 - nbconvert

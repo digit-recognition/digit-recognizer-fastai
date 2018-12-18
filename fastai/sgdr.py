@@ -98,33 +98,12 @@ class LossRecorder(Callback):
         elif len(vals) == 2: self.rec_metrics.append(vals[1])
 
     def plot_loss(self, n_skip=10, n_skip_end=5):
-        '''
-        plots loss function as function of iterations. 
-        When used in Jupyternotebook, plot will be displayed in notebook. Else, plot will be displayed in console and both plot and loss are saved in save_path. 
-        '''
-        if not in_ipynb(): plt.switch_backend('agg')
-        plt.plot(self.iterations[n_skip:-n_skip_end], self.losses[n_skip:-n_skip_end])
-        if not in_ipynb():
-            plt.savefig(os.path.join(self.save_path, 'loss_plot.png'))
-            np.save(os.path.join(self.save_path, 'losses.npy'), self.losses[10:])
+#     deleted by KugMax
+
+        pass
 
     def plot_lr(self):
-        '''Plots learning rate in jupyter notebook or console, depending on the enviroment of the learner.'''
-        if not in_ipynb():
-            plt.switch_backend('agg')
-        if self.record_mom:
-            fig, axs = plt.subplots(1,2,figsize=(12,4))
-            for i in range(0,2): axs[i].set_xlabel('iterations')
-            axs[0].set_ylabel('learning rate')
-            axs[1].set_ylabel('momentum')
-            axs[0].plot(self.iterations,self.lrs)
-            axs[1].plot(self.iterations,self.momentums)   
-        else:
-            plt.xlabel("iterations")
-            plt.ylabel("learning rate")
-            plt.plot(self.iterations, self.lrs)
-        if not in_ipynb():
-            plt.savefig(os.path.join(self.save_path, 'lr_plot.png'))
+        pass
 
 
 class LR_Updater(LossRecorder):
@@ -188,13 +167,7 @@ class LR_Finder(LR_Updater):
         return super().on_batch_end(metrics)
 
     def plot(self, n_skip=10, n_skip_end=5):
-        '''
-        Plots the loss function with respect to learning rate, in log scale. 
-        '''
-        plt.ylabel("validation loss")
-        plt.xlabel("learning rate (log scale)")
-        plt.plot(self.lrs[n_skip:-(n_skip_end+1)], self.losses[n_skip:-(n_skip_end+1)])
-        plt.xscale('log')
+        pass
 
 class LR_Finder2(LR_Finder):
     """
@@ -213,23 +186,7 @@ class LR_Finder2(LR_Finder):
         return super().on_batch_end(loss)
 
     def plot(self, n_skip=10, n_skip_end=5, smoothed=True):
-        if self.metrics is None: self.metrics = []
-        n_plots = len(self.metrics)+2
-        fig, axs = plt.subplots(n_plots,figsize=(6,4*n_plots))
-        for i in range(0,n_plots): axs[i].set_xlabel('learning rate')
-        axs[0].set_ylabel('training loss')
-        axs[1].set_ylabel('validation loss')
-        for i,m in enumerate(self.metrics): 
-            axs[i+2].set_ylabel(m.__name__)
-            if len(self.metrics) == 1:
-                values = self.rec_metrics
-            else:
-                values = [rec[i] for rec in self.rec_metrics]
-            if smoothed: values = smooth_curve(values,0.98)
-            axs[i+2].plot(self.lrs[n_skip:-n_skip_end], values[n_skip:-n_skip_end])
-        plt_val_l = smooth_curve(self.val_losses, 0.98) if smoothed else self.val_losses
-        axs[0].plot(self.lrs[n_skip:-n_skip_end],self.losses[n_skip:-n_skip_end])
-        axs[1].plot(self.lrs[n_skip:-n_skip_end],plt_val_l[n_skip:-n_skip_end])
+        pass
 
 class CosAnneal(LR_Updater):
     ''' Learning rate scheduler that implements a cosine annealation schedule. '''
@@ -555,41 +512,7 @@ class OptimScheduler(LossRecorder):
         self.phase += 1
 
     def plot_lr(self, show_text=True, show_moms=True):
-        """Plots the lr rate/momentum schedule"""
-        phase_limits = [0]
-        for nb_batch, phase in zip(self.nb_batches, self.phases):
-            phase_limits.append(phase_limits[-1] + nb_batch * phase.epochs)
-        if not in_ipynb():
-            plt.switch_backend('agg')
-        np_plts = 2 if show_moms else 1
-        fig, axs = plt.subplots(1,np_plts,figsize=(6*np_plts,4))
-        if not show_moms: axs = [axs]
-        for i in range(np_plts): axs[i].set_xlabel('iterations')
-        axs[0].set_ylabel('learning rate')
-        axs[0].plot(self.iterations,self.lrs)
-        if show_moms:
-            axs[1].set_ylabel('momentum')
-            axs[1].plot(self.iterations,self.momentums)
-        if show_text:   
-            for i, phase in enumerate(self.phases):
-                text = phase.opt_fn.__name__
-                if phase.wds is not None: text+='\nwds='+str(phase.wds)
-                if phase.beta is not None: text+='\nbeta='+str(phase.beta)
-                for k in range(np_plts):
-                    if i < len(self.phases)-1:
-                        draw_line(axs[k], phase_limits[i+1])
-                    draw_text(axs[k], (phase_limits[i]+phase_limits[i+1])/2, text) 
-        if not in_ipynb():
-            plt.savefig(os.path.join(self.save_path, 'lr_plot.png'))
-    
-    def plot(self, n_skip=10, n_skip_end=5, linear=None):
-        if linear is None: linear = self.phases[-1].lr_decay == DecayType.LINEAR
-        plt.ylabel("loss")
-        plt.plot(self.lrs[n_skip:-n_skip_end], self.losses[n_skip:-n_skip_end])
-        if linear: plt.xlabel("learning rate")
-        else:
-            plt.xlabel("learning rate (log scale)")
-            plt.xscale('log')
+        pass
 
 def draw_line(ax,x):
     xmin, xmax, ymin, ymax = ax.axis()

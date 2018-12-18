@@ -11,8 +11,10 @@ ENV PATH /opt/conda/envs/fastai-cpu/bin:$PATH
 RUN echo "conda activate fastai-cpu" >> ~/.bashrc
 
 #dependencies
-RUN python -m pip install grpcio && python -m pip install grpcio-tools && python -m pip install matplotlib \
+RUN python -m pip install grpcio && python -m pip install grpcio-tools \
      && python -m pip install pyqt5
+
+RUN python -m pip install python-resize-image
 
 #app
 COPY /models "/usr/src/${SERVICE_NAME}/models"
@@ -23,7 +25,7 @@ COPY run.py "/usr/src/${SERVICE_NAME}"
 
 WORKDIR /usr/src/$SERVICE_NAME
 
-#RUN conda activate fastai-cpu
+CMD conda activate fastai-cpu
 
 EXPOSE 50051
 
