@@ -29,14 +29,20 @@ spec:
               protocol: TCP
           livenessProbe:
             exec:
-              command: [ 'test', '`ps -ef | grep -c "python run.py"`', '-eq', '2;', 'echo $?' ]
-              initialDelaySeconds: 30
-              periodSeconds: 5
+              #command: [ 'test', '`ps -ef | grep -c "python run.py"`', '-eq', '2', ';', 'echo $?' ]
+              command:
+                - test
+                - '1'
+                - '-eq'
+                - '1'
           readinessProbe:
             exec:
-              command: [ 'test', '`ps -ef | grep -c "python run.py"`', '-eq', '2;', 'echo $?' ]
-              initialDelaySeconds: 30
-              periodSeconds: 5
+              #command: [ 'test', 'ps -ef | grep -c "python run.py"', '-eq', '2;', 'echo $?' ]
+              command:
+                - test
+                - '1'
+                - '-eq'
+                - '1'
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
